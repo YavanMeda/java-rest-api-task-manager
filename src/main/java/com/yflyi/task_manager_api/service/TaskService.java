@@ -2,11 +2,10 @@ package com.yflyi.task_manager_api.service;
 
 import com.yflyi.task_manager_api.dto.TaskRequest;
 import com.yflyi.task_manager_api.dto.TaskResponse;
+import com.yflyi.task_manager_api.exception.ResourceNotFoundException;
 import com.yflyi.task_manager_api.model.Task;
 import com.yflyi.task_manager_api.repository.TaskRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -51,7 +50,7 @@ public class TaskService {
 
     private Task findTaskById(Long id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " was not found"));
     }
 
     private Task mapToEntity(TaskRequest taskRequest) {
